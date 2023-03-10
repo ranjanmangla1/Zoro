@@ -2,8 +2,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Twitter from '../assets/Twitter_white.png';
 import { CopyBlock, dracula } from "react-code-blocks";
-// import AceEditor from "react-ace";
-// import {juice} from 'juice';
 
 import { useState } from 'react';
 
@@ -90,9 +88,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
     const [userInput11,setUserInput11] = useState('');
     const [userInput12,setUserInput12] = useState('');
     const [apiOutput,setApiOutput] = useState('')
-    // const [finalApiOutput,setFinalApiOutput] = useState('')
     const [isGenerating,setIsGenerating] = useState(false)
-    // const [source, setSource] = useState("")
 
     const basePrefix1 = `\nTarget Audience: `;
     const basePrefix2 = `\nBrand Colors: `;
@@ -123,7 +119,6 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
           const data = await response.json();
           const {output} = data;
-          // const output = useState(juice(outputFinal))
           console.log("OpenAI replied...", output.text)
 
             setApiOutput(`${output.text}`);
@@ -280,11 +275,6 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
                           wrapLines={true}
                           codeBlock
                       />
-                      
-                    {/* <iframe id="codeFrame" ref = 'codeFrame'></iframe>
-                    <iframe title="output"srcdoc={srcdoc} /> */}
-                    {/* <AceEditor className="editor" mode="xml" value={source} onChange={setSource}/> */}
-                            {/* {writeToIframe(apiOutput)} */}
                     </div>
               </div>
             </div>
