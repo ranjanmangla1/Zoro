@@ -7,7 +7,8 @@ import { useState } from 'react';
 
 
 const Home = () => {
-
+  
+//   Final Prompt for gpt-3...this will generate us our HTML
   const finalPromptPrefix = `
   
   Convert the copy in HTML and beautify it with CSS & JavaScript 
@@ -55,6 +56,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
   Generate CSS for each Individual HTML element separately and Embed inline CSS in each HTML element separately
   `;
 
+  //   Final Prompt for gpt-3...this will generate us our Copy
   const basePromptPrefix =
     `Write an email copy with an attention-grabbing subject that looks well-researched, and professional, and reflects that writer knows about the product and understands consumer psychology. The copy must have a good flow and should be able to convert. The email copy should have a clear call-to-action, and it should tempt the reader to read the whole copy.
 
@@ -74,7 +76,8 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
     Situation:
 `;
-
+    
+//   for taking user Input
     const [userInput1, setUserInput1] = useState('');
     const [userInput2, setUserInput2] = useState('');
     const [userInput3, setUserInput3] = useState('');
@@ -87,9 +90,14 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
     const [userInput10,setUserInput10] = useState('');
     const [userInput11,setUserInput11] = useState('');
     const [userInput12,setUserInput12] = useState('');
+  
+//     for storing and outputing the output, we will get from gpt-3 api
     const [apiOutput,setApiOutput] = useState('')
+    
+//     to keep track of whether, we are requesting any data from gpt or not
     const [isGenerating,setIsGenerating] = useState(false)
-
+    
+    //  Base prefixes to combine multiple user inputs and to get better user output
     const basePrefix1 = `\nTarget Audience: `;
     const basePrefix2 = `\nBrand Colors: `;
     const basePrefix3 = '\n Brand Fonts: ';
@@ -101,9 +109,11 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
     const basePrefix9 = `\n Linkedin: `;
     const basePrefix10 = `\nInstagram: `;
     const basePrefix11= `\nContact: `;
-
+    
+//     chainining all user inputs and prefixes to get a final prompt
     const userInput = basePromptPrefix + userInput1 + basePrefix1+finalPromptPrefix+ userInput2+basePrefix2+userInput3+basePrefix3+userInput4+basePrefix4+userInput5+basePrefix5+userInput6+basePrefix6+userInput7+basePrefix7+userInput8 + basePrefix8+userInput9+basePrefix9+userInput10+basePrefix10+userInput11+basePrefix11+userInput12;
-
+    
+//   requesting response from api
   const callGenerateEndpoint = async () => {
         setIsGenerating(true);
 
@@ -124,63 +134,50 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
             setApiOutput(`${output.text}`);
             setIsGenerating(false);
 }
-
-      
-
+     
+// Setting userInput in our variable and also it is helpful when user makes any change in the text fields
   const onUserChangedText1 = (event) => {
-    // console.log(event.target.value);
     setUserInput1(event.target.value);
   };
   const onUserChangedText2 = (event) => {
-    // console.log(event.target.value);
     setUserInput2(event.target.value);
   }; 
   const onUserChangedText3 = (event) => {
-    // console.log(event.target.value);
     setUserInput3(event.target.value);
   }; 
   const onUserChangedText4 = (event) => {
-    // console.log(event.target.value);
     setUserInput4(event.target.value);
   }; 
   const onUserChangedText5 = (event) => {
-    // console.log(event.target.value);
     setUserInput5(event.target.value);
   }; 
   const onUserChangedText6 = (event) => {
-    // console.log(event.target.value);
     setUserInput6(event.target.value);
   }; 
   const onUserChangedText7 = (event) => {
-    // console.log(event.target.value);
     setUserInput7(event.target.value);
   };
   const onUserChangedText8 = (event) => {
-    // console.log(event.target.value);
     setUserInput8(event.target.value);
   }; 
   const onUserChangedText9 = (event) => {
-    // console.log(event.target.value);
     setUserInput9(event.target.value);
   };
   const onUserChangedText10 = (event) => {
-    // console.log(event.target.value);
     setUserInput10(event.target.value);
   };
   const onUserChangedText11 = (event) => {
-    // console.log(event.target.value);
     setUserInput11(event.target.value);
   };
   const onUserChangedText12 = (event) => {
-    // console.log(event.target.value);
     setUserInput12(event.target.value);
   };
+  
   return (
     <div className="root">
       <Head>
       <link rel="shortcut icon" href="/Icon.ico" />
-        <title>{/*Inspiration Quotes GPT-3*/}
-          {/*Tutorial Generator*/}Email Generator & Scheduler</title>
+        <title>Email Generator & Scheduler</title>
       </Head>
       <div className="container">
         <div className="header">
@@ -189,9 +186,11 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
               {/*AI Teaching Assistant*/}Email Generator & Scheduler</h1>
           </div>
           <div className="header-subtitle">
-            <h2>{/*Insert the name of celebrity and you will get an inspirational quote that looks like celebrity said it*/}{/*Type a topic & AI will teach you about that*/}Copywriting for Email Campaigns</h2>
+            <h2>Copywriting for Email Campaigns with beautiful HTML templates</h2>
           </div>
         </div>
+
+        {/* to take user inputs*/}
         <div className="prompt-container">
           <textarea placeholder="Tell About your Organization..." className="prompt-box"
             value={userInput1}
@@ -240,7 +239,8 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
             <textarea placeholder="Contact: " className="prompt-box"
             value={userInput12}
             onChange={onUserChangedText12} />
-
+          
+              {/*Generate button to get output*/}
           <div className="prompt-buttons">
             <a className={isGenerating ? 'generate-button loading' : 'generate-button'}
               onClick={callGenerateEndpoint}>
@@ -258,9 +258,11 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
               </div>
               <div className='Output-frames'>
               <div className="output-content">
+            {/*iframe generates HTML output of the mal*/}
                       <iframe srcdoc = {apiOutput} width = '400' height = '800'></iframe>
                     </div>
                       <div className="output-code">
+                        {/*Using react-code-blocks package to show Raw HTML output so that user can make amendments on the fly*/}
                       <CopyBlock
                           customStyle={{
                             height: '800px',
@@ -281,7 +283,8 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
           )}
         </div>
       </div>
-
+      
+{/*To show who created it*/}
       <div className="badge-container grow">
         <a
           href="https://twitter.com/ranjan_mangla"
@@ -289,7 +292,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
           rel="noreferrer"
         >
           <div className="badge">
-            <Image src={Twitter} alt="buildspace logo" />
+            <Image src={Twitter} alt="Twitter-logo" />
             <p>built by Ranjan</p>
           </div>
         </a>
