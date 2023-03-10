@@ -19,36 +19,6 @@ body {
     position: relative;
 }
 
-/* .root {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: linear-gradient(to right, #000000, #000000);
-    display: flex;
-    flex-grow: 1;
-    z-index: -1;
-} */
-
-/* .root div {
-    position: absolute;
-    border-radius: 100%;
-    height: 0;
-    filter: blur(240vw);
-    opacity: 0.4;
-} */
-
-/* .root div:nth-child(1) {
-    background: linear-gradient(132deg, #1dd7b5 0.00%, #f0f9a7 100.00%);
-    width: 29%;
-    padding-top: 29%;
-    left: 100%;
-    top: 13%;
-    transform: translateX(-50%) translateY(-50%);
-}  */
-
 .container {
     display: flex;
     place-content: center flex-start;
@@ -169,12 +139,7 @@ textarea {
     overflow: hidden;
     padding: 0px;
     position: relative;
-    width: 100%;
-    /* background: -webkit-linear-gradient(#1ed7b5,#f0f9a7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
-    /* background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%); */
-    
+    width: 100%;    
 }
 
 .key-stroke {
@@ -211,10 +176,7 @@ textarea {
 .generate-button {
     place-content: flex-start;
     align-items: flex-start;
-    /* background-color: rgb(255, 79, 18); */
-    /* background-image: linear-gradient(to right,rgb(29, 215, 181) , rgb(240, 249, 167)); */
-    background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
-    /* background: , #84fab0 100% */
+     background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
     border-radius: 77px;
     display: flex;
     flex: 0 0 auto;
@@ -229,15 +191,12 @@ textarea {
     width: min-content;
     will-change: transform;
     transition: 0.5s;
-    cursor: pointer; 
-    /* box-shadow: 0 0 20px #eee;    */
+    cursor: pointer;
     background-size: 200% auto;
 }
 
 .generate-button:hover{
-        background-position: right center; /* change the direction of the change here */
-        /* color: #fff;
-        text-decoration: none;*/
+        background-position: right center; 
 } 
 
 .generate {
@@ -301,7 +260,6 @@ textarea {
 .badge img {
     width: 21px;
     height: 21px;
-    /* image-rendering: pixelated; */
     flex-shrink: 0;
     fill: black;
     color: black;
@@ -321,6 +279,8 @@ textarea {
 .grow:hover {
     transform: scale(1.1);
 }
+
+/* Output */
 
 .output {
     place-content: center flex-start;
@@ -381,6 +341,7 @@ textarea {
     color: rgba(255, 255, 255, 0.5);
 }
 
+/* to show iframe & code block in same row */
 .Output-frames {
     display: flex;
     justify-content: space-around;
@@ -389,10 +350,12 @@ textarea {
 
 }
 
+/* for the code block */
 .output-code {
         font-family: "Fira Code", monospace;
 }
 
+/* media queries */
 @media (min-width: 810px) and (max-width: 1199px) {
     .container {
         max-width: 600px;
@@ -479,6 +442,7 @@ textarea {
     }
 }
 
+/* for the case when if gpt-3 by mistakes, doesn't generate HTML code and generates copy only */
 iframe{
     color:white;
 }
