@@ -119,7 +119,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
         console.log("Calling OpenAI...", userInput)
         
-        const response = await fetch('/api/generate', {
+        const response = await fetch('./api/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
