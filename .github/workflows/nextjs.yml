@@ -81,8 +81,10 @@ jobs:
         with:
           path: ./out
       - name: Api keys
-        with: # Set the secret as an input
-          super_secret: ${{ secrets.OPENAI_API_KEY_TWO }}
+        run: |
+          echo "$OPENAI_API_KEY_TWO"
+        env: # Set the secret as an input
+          OPENAI_API_KEY_TWO: ${{ secrets.OPENAI_API_KEY_TWO }}
 
   # Deployment job
   deploy:
