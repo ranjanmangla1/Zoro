@@ -176,14 +176,13 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
   return (
     <div className="root">
       <Head>
-      <link rel="shortcut icon" href="/Icon.ico" />
+      <link rel="shortcut icon" href="./Icon.ico" />
         <title>Email Generator & Scheduler</title>
       </Head>
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>{/*Inspiration Quote Generator*/}
-              {/*AI Teaching Assistant*/}Email Generator & Scheduler</h1>
+            <h1>Email Generator & Scheduler</h1>
           </div>
           <div className="header-subtitle">
             <h2>Copywriting for Email Campaigns with beautiful HTML templates</h2>
