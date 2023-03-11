@@ -129,7 +129,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
           const data = await response.json();
           const {output} = data;
-          console.log("OpenAI replied...", output.text)
+//           console.log("OpenAI replied...", output.text)
 
             setApiOutput(`${output.text}`);
             setIsGenerating(false);
