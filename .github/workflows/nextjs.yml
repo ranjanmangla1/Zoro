@@ -80,6 +80,9 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
+      - name: Api keys
+        with: # Set the secret as an input
+          super_secret: ${{ secrets.OPENAI_API_KEY_TWO }}
 
   # Deployment job
   deploy:
