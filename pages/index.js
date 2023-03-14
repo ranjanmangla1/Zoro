@@ -1,16 +1,17 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Twitter from '../assets/Twitter_white.png';
+import React from 'react';
 import { CopyBlock, dracula } from "react-code-blocks";
+// import {juice} from 'juice';
 
 import { useState } from 'react';
 
 
 const Home = () => {
-  
-//   Final Prompt for gpt-3...this will generate us our HTML
+
+  //   Final Prompt for gpt-3...this will generate us our HTML
   const finalPromptPrefix = `
-  
   Convert the copy in HTML and beautify it with CSS & JavaScript 
   Create a beautiful web design for the Email as well.
   There should be a header and footer section as well
@@ -18,7 +19,7 @@ const Home = () => {
   Incorporate all modern UI principles and create a modern design-styled copy Use provided colors well.
 
   Instead of HTML5, Use HTML 4.01 Transitional Doctype declarations:
-DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/DTD/loose.dtd
+  DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/DTD/loose.dtd
   Also add these two meta tags in email header:
   meta name="format-detection" content="date=no"
   meta name="format-detection" content="telephone=no"
@@ -49,14 +50,14 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
   all the icons should be in same row with proper space
   Buttons should be centred and all the text & icons of footer should come in center
 
-  Images: Try to avoid writing text on Images. Don't use dark text on dark images. If writing text on image, first apply filter on the image and then write text in a light color if image is dark or write text in a dark color if image is light colored. If not given a link for an image; if not asked to generate, don't generate on your own and don't leave a blank space for it
+  Images: Try to avoid writing text on Images. Don't use dark text on dark images. If writing text on image, first apply filter on the image and then write text in a light color if image is dark or write text in a dark color if image is light colored. If not given a link for an image & if not asked to generate, don't generate on your own and don't leave a blank space for it. Images should not overflow.
 
   Based on guidelines above, write an email copy, in form of HTML and Generate inline css for it
 
   Generate CSS for each Individual HTML element separately and Embed inline CSS in each HTML element separately
   `;
 
-  //   Final Prompt for gpt-3...this will generate us our Copy
+    //   Final Prompt for gpt-3...this will generate us our Copy
   const basePromptPrefix =
     `Write an email copy with an attention-grabbing subject that looks well-researched, and professional, and reflects that writer knows about the product and understands consumer psychology. The copy must have a good flow and should be able to convert. The email copy should have a clear call-to-action, and it should tempt the reader to read the whole copy.
 
@@ -76,8 +77,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
     Situation:
 `;
-    
-//   for taking user Input
+
     const [userInput1, setUserInput1] = useState('');
     const [userInput2, setUserInput2] = useState('');
     const [userInput3, setUserInput3] = useState('');
@@ -90,13 +90,17 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
     const [userInput10,setUserInput10] = useState('');
     const [userInput11,setUserInput11] = useState('');
     const [userInput12,setUserInput12] = useState('');
-  
-//     for storing and outputing the output, we will get from gpt-3 api
+    
+    //     for storing and outputing the output, we will get from gpt-3 api
     const [apiOutput,setApiOutput] = useState('')
+    const [subjectLine,setSubjectLine] = useState('')
     
-//     to keep track of whether, we are requesting any data from gpt or not
+    //     to keep track of whether, we are requesting any data from gpt or not
     const [isGenerating,setIsGenerating] = useState(false)
-    
+
+    const ref = React.createRef();
+    const [height, setHeight] = React.useState("0px");
+
     //  Base prefixes to combine multiple user inputs and to get better user output
     const basePrefix1 = `\nTarget Audience: `;
     const basePrefix2 = `\nBrand Colors: `;
@@ -109,17 +113,17 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
     const basePrefix9 = `\n Linkedin: `;
     const basePrefix10 = `\nInstagram: `;
     const basePrefix11= `\nContact: `;
-    
-//     chainining all user inputs and prefixes to get a final prompt
+
+    //     chainining all user inputs and prefixes to get a final prompt
     const userInput = basePromptPrefix + userInput1 + basePrefix1+finalPromptPrefix+ userInput2+basePrefix2+userInput3+basePrefix3+userInput4+basePrefix4+userInput5+basePrefix5+userInput6+basePrefix6+userInput7+basePrefix7+userInput8 + basePrefix8+userInput9+basePrefix9+userInput10+basePrefix10+userInput11+basePrefix11+userInput12;
-    
-//   requesting response from api
+
+  //   requesting response from api
   const callGenerateEndpoint = async () => {
         setIsGenerating(true);
 
         console.log("Calling OpenAI...", userInput)
         
-        const response = await fetch('./api/generate', {
+        const response = await fetch('/api/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -129,13 +133,16 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
 
           const data = await response.json();
           const {output} = data;
-//           console.log("OpenAI replied...", output.text)
+          // const output = useState(juice(outputFinal))
+          console.log("OpenAI replied...", output.text)
+          const finalOutput = output.text;
 
-            setApiOutput(`${output.text}`);
+            setApiOutput(`${finalOutput.substring(0, finalOutput.indexOf("<"))}`);
+            setSubjectLine(`${finalOutput.substring(finalOutput.indexOf("<"),finalOutput.length)}`);
             setIsGenerating(false);
 }
-     
-// Setting userInput in our variable and also it is helpful when user makes any change in the text fields
+
+  // Setting userInput in our variable and also it is helpful when user makes any change in the text fields
   const onUserChangedText1 = (event) => {
     setUserInput1(event.target.value);
   };
@@ -172,7 +179,10 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
   const onUserChangedText12 = (event) => {
     setUserInput12(event.target.value);
   };
-  
+
+  const onLoad = () => {
+    setHeight(ref.current.contentWindow.document.body.scrollHeight + "px");
+  };
   return (
     <div className="root">
       <Head>
@@ -188,8 +198,6 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
             <h2>Copywriting for Email Campaigns with beautiful HTML templates</h2>
           </div>
         </div>
-
-        {/* to take user inputs*/}
         <div className="prompt-container">
           <textarea placeholder="Tell About your Organization..." className="prompt-box"
             value={userInput1}
@@ -238,8 +246,8 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
             <textarea placeholder="Contact: " className="prompt-box"
             value={userInput12}
             onChange={onUserChangedText12} />
-          
-              {/*Generate button to get output*/}
+
+                {/*Generate button to get output*/}
           <div className="prompt-buttons">
             <a className={isGenerating ? 'generate-button loading' : 'generate-button'}
               onClick={callGenerateEndpoint}>
@@ -253,24 +261,41 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
               <div className="output-header-container">
                 <div className="output-header">
                   <h3>Output</h3>
+                  <div className = "SubjectLine">
+                    <h5 >{apiOutput}</h5>
+                  </div>
                 </div>
               </div>
-              <div className='Output-frames'>
-              <div className="output-content">
-            {/*iframe generates HTML output of the mal*/}
-                      <iframe srcdoc = {apiOutput} width = '400' height = '800'></iframe>
+              {/* <div className='Output-frames'> */}
+                    <div className="output-content">
+                     {/*iframe generates HTML output of the mail*/}
+                      <iframe srcdoc = {subjectLine}
+                      ref={ref}
+                      onLoad={onLoad}
+                      id="myFrame"
+                      // src="http://demo_iframe.htm"
+                      width="100%"
+                      height={height}
+                      customStyle={{
+                        maxWidth: 640,
+                        width: "100%",
+                        overflow: "auto",
+                      }}></iframe>
                     </div>
                       <div className="output-code">
-                        {/*Using react-code-blocks package to show Raw HTML output so that user can make amendments on the fly*/}
+                         {/*Using react-code-blocks package to show Raw HTML output so that user can make amendments on the fly*/}
                       <CopyBlock
+                          ref={ref}
+                          onLoad={onLoad}
+                          height={height}
                           customStyle={{
-                            height: '800px',
-                            width: '400px',
+                            // height: '800px',
+                            maxWidth: '800px',
                             overflow: 'scroll',
                           }}
                           className='code'
                           language={'html'}
-                          text={apiOutput}
+                          text={subjectLine}
                           showLineNumbers={true}
                           theme={dracula}
                           wrapLines={true}
@@ -278,12 +303,11 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
                       />
                     </div>
               </div>
-            </div>
           )}
         </div>
       </div>
-      
-{/*To show who created it*/}
+
+    {/*To show who created it*/}
       <div className="badge-container grow">
         <a
           href="https://twitter.com/ranjan_mangla"
@@ -291,7 +315,7 @@ DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/
           rel="noreferrer"
         >
           <div className="badge">
-            <Image src={Twitter} alt="Twitter-logo" />
+            <Image src={Twitter} alt="buildspace logo" />
             <p>built by Ranjan</p>
           </div>
         </a>
